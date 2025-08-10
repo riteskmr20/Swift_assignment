@@ -7,25 +7,28 @@ type Post = {
     body: string;
 };
 const columns: { field: keyof Post; label: string }[] = [
-  { field: "id", label: "Post ID" },
-  { field: "name", label: "Name" },
-  { field: "email", label: "Email" },
+    { field: "id", label: "Post ID" },
+    { field: "name", label: "Name" },
+    { field: "email", label: "Email" },
 ];
 
+const defaultState = { currentPage: 1, itemsPerPage: 10 };
 export default function PostTable() {
     const [data, setData] = useState<Post[]>([]);
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState("");
     const [sortField, setSortField] = useState<keyof Post | "">("");
     const [sortOrder, setSortOrder] = useState<"" | "asc" | "desc">("");
-    const [currentPage, setCurrentPage] = useState(JSON.parse(localStorage.getItem("tableState") || "{currentPage :1,itemsPerPage:10}").currentPage);
-    const [itemsPerPage, setItemsPerPage] = useState(JSON.parse(localStorage.getItem("tableState") || "{currentPage :1,itemsPerPage:10}").itemsPerPage);
+    const savedState = JSON.parse(localStorage.getItem("tableState") || JSON.stringify(defaultState));
+    const [currentPage, setCurrentPage] = useState(savedState.currentPage);
+    const [itemsPerPage, setItemsPerPage] = useState(savedState.itemsPerPage);
     const inputRef = useRef<HTMLInputElement>(null);
 
     // on mount
     useEffect(() => {
 
-        const saved = JSON.parse(localStorage.getItem("tableState") || "{currentPage :1,itemsPerPage:10}");
+        const saved = JSON.parse(localStorage.getItem("tableState") || JSON.stringify(defaultState));
+
         console.log(saved);
         if (saved.search) setSearch(saved.search);
 
@@ -40,7 +43,7 @@ export default function PostTable() {
     useEffect(() => {
         localStorage.setItem("tableState", JSON.stringify({ search, sortField, sortOrder, currentPage, itemsPerPage }));
     }, [search, sortField, sortOrder, currentPage, itemsPerPage]);
-    
+
     // Shortcut
     useEffect(() => {
         function handleKeyDown(e: KeyboardEvent) {
