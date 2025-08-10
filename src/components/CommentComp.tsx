@@ -38,7 +38,7 @@ export default function PostTable() {
 
     }, []);
 
-    console.log(currentPage, itemsPerPage);
+    console.log(currentPage, itemsPerPage);     
     // persist
     useEffect(() => {
         localStorage.setItem("tableState", JSON.stringify({ search, sortField, sortOrder, currentPage, itemsPerPage }));
@@ -319,7 +319,7 @@ export default function PostTable() {
 
                     <button
                         disabled={currentPage === 1}
-                        onClick={() => setCurrentPage((p) => p - 1)}
+                        onClick={() => setCurrentPage((p:number) => p - 1)}
                         className="px-3 py-1 border border-gray-300 rounded-md disabled:opacity-50 hover:bg-gray-100 transition"
                     >
                         {"<"}
@@ -329,7 +329,7 @@ export default function PostTable() {
                     </span>
                     <button
                         disabled={currentPage === totalPages}
-                        onClick={() => setCurrentPage((p) => p + 1)}
+                        onClick={() => setCurrentPage((p:number) => p + 1)}
                         className="px-3 py-1 border border-gray-300 rounded-md disabled:opacity-50 hover:bg-gray-100 transition"
                     >
                         {">"}
