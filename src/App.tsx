@@ -16,7 +16,7 @@ export default function App() {
       <Router>
         <Routes>
           {/* Parent Route */}
-          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+          <Route path="/" element={<Navigate to="/dashboard/comments" replace />} />
           <Route path="/dashboard" element={<DashboardLayout/>}>
             {/* Nested Routes */}
             <Route path="profile" element={<UserProfile />} />
